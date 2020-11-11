@@ -9,7 +9,16 @@
         android:roundIcon="@mipmap/ic_supleconsu_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screenMain.Login" android:screenOrientation="portrait"/>
+        <activity android:name=".screenMain.ScreenSignup">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".screenMain.Login"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screenMain.ScreenLogin"
             android:screenOrientation="portrait" />
