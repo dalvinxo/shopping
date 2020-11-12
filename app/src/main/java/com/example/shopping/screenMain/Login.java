@@ -13,11 +13,12 @@ import android.widget.Button;
 
 import com.example.shopping.MainActivity;
 import com.example.shopping.R;
+import com.example.shopping.screenSuplier.MainSuplierActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class Login extends AppCompatActivity {
 
-    Button back, signup;
+    Button back, signup, recovery, login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,8 @@ public class Login extends AppCompatActivity {
 
         back = findViewById(R.id.btn_backlogin);
         signup = findViewById(R.id.btn_signupLogin);
+        recovery = findViewById(R.id.btn_recoveryLogin);
+        login = findViewById(R.id.btn_accessLogin);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,19 +42,37 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent start = new Intent(Login.this, ScreenSignup.class);
                 startActivity(start);
-                overridePendingTransition(R.anim.in_top,R.anim.out_top);
+                overridePendingTransition(R.anim.in_bottom,R.anim.out_bottom);
             }
         });
-    }
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent start = new Intent(Login.this, MainSuplierActivity.class);
+                startActivity(start);
+                overridePendingTransition(R.anim.in_fade,R.anim.out_fade);
+            }
+        });
+
+        recovery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent start = new Intent(Login.this, RecoveryPassword.class);
+                startActivity(start);
+                overridePendingTransition(R.anim.in_bottom,R.anim.out_bottom);
+            }
+        });
+
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.in_top, R.anim.out_top);
+        overridePendingTransition(R.anim.in_top,R.anim.out_top);
     }
 
-   /* private void alertSignup(){
+    /* private void alertSignup(){
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder (Login.this,android.R.style.Theme_Material_Dialog_NoActionBar);
         LayoutInflater inflater = getLayoutInflater();

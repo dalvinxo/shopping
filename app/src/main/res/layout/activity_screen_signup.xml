@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_loginSingup"
+                android:id="@+id/btn_backSingup"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -41,6 +41,8 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="36dp"
+                android:layout_marginRight="36dp"
                 android:paddingHorizontal="10dp"
                 android:text="Signup"
                 android:textColor="#464A5D"
@@ -48,9 +50,10 @@
                 app:fontFamily="@font/chicle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_nextSingup"
-                app:layout_constraintStart_toEndOf="@+id/btn_loginSingup"
+                app:layout_constraintHorizontal_bias="0.951"
+                app:layout_constraintStart_toEndOf="@+id/btn_backSingup"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.533" />
+                app:layout_constraintVertical_bias="0.545" />
 
             <Button
                 android:id="@+id/btn_nextSingup"
@@ -76,6 +79,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <!-- Note: A RecyclerView can also be used -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -95,6 +99,7 @@
             android:weightSum="2"
             >
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tf_signupUser"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -108,7 +113,9 @@
                 app:boxStrokeWidth="2dp"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
-                app:startIconDrawable="@drawable/ic_email">
+                app:startIconDrawable="@drawable/ic_email"
+                android:elevation="1dp"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -139,7 +146,9 @@
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
                     android:layout_marginHorizontal="2dp"
-                    app:startIconDrawable="@drawable/ic_email">
+                    app:startIconDrawable="@drawable/ic_email"
+                    android:elevation="1dp"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -161,7 +170,9 @@
                     app:boxStrokeWidth="2dp"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
-                    app:startIconDrawable="@drawable/ic_email">
+                    app:startIconDrawable="@drawable/ic_email"
+                    android:elevation="1dp"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -188,27 +199,47 @@
                 app:boxStrokeWidth="2dp"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
-                app:startIconDrawable="@drawable/ic_email">
-
-              <!--<com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    app:met_mask="+1(###) ###-####"
-                    />-->
+                app:startIconDrawable="@drawable/ic_phone"
+                android:elevation="1dp"
+                >
 
                 <com.santalu.maskedittext.MaskEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    app:met_mask="+1 (###) ###-####"
-                    />
+                    app:met_mask="+1 (###) ###-####" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tf_loginPassword"
+                android:id="@+id/tf_signupAddress"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                android:hint="Address"
+                app:boxStrokeColor="#9CB9BF"
+                app:boxStrokeErrorColor="#B31433"
+                app:boxStrokeWidth="2dp"
+                app:errorEnabled="true"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_flecha_right"
+                android:elevation="1dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tf_SignupPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -221,7 +252,7 @@
                 app:endIconMode="password_toggle"
                 app:errorEnabled="true"
                 app:startIconDrawable="@drawable/ic_password"
-
+                android:elevation="1dp"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -231,38 +262,18 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btn_signupLogin"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="18dp"
-                android:backgroundTint="#597E9B"
-                android:elevation="2dp"
-                android:fontFamily="@font/amarante"
-                android:paddingHorizontal="80dp"
-                android:paddingVertical="10dp"
-                android:text="Sing up"
-                android:textColor="#DDE2E4"
-                android:textSize="20sp"
-                app:boxStrokeColor="#464A5D"
-                app:boxStrokeWidth="2dp"
-                app:boxStrokeWidthFocused="3dp"
-                app:cornerRadius="10dp"
-                app:rippleColor="#97B0C3" />
 
 
-            <Button
-                android:id="@+id/btn_recoveryLogin"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="12dp"
-                android:text="recover password"
-                android:textColor="#3E5C7A" />
+
+                <CheckBox
+                    android:id="@+id/cb_terminePolicy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="12dp"
+                    app:buttonTint="#3E5C7A"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:text="You accept our Terms, Data Policy and Cookies Policy more..."/>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

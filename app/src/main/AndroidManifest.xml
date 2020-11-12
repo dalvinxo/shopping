@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_supleconsu_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screenMain.ScreenSignup">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".screenSuplier.AddCompanyActivity"></activity>
+        <activity android:name=".screenSuplier.MainSuplierActivity" />
+        <activity android:name=".screenMain.RecoveryPassword" />
+        <activity android:name=".screenMain.screenSignup1" />
+        <activity
+            android:name=".screenMain.ScreenSignup"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screenMain.Login"
             android:screenOrientation="portrait" />
