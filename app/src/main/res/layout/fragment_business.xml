@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screenSuplier.fragments.FragmentBusiness"
+    android:background="#B7CAEFF6"
     >
 
     <!-- TODO: Update blank fragment layout -->
@@ -30,8 +31,8 @@
             tools:ignore="VectorDrawableCompat" />
 
 
-    <ListView
-        android:id="@+id/listView_company"
+        <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCompany"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

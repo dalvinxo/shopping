@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_supleconsu_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screenSuplier.AddCompanyActivity"></activity>
+        <activity android:name=".screenSuplier.SecondSuplierActivity"></activity>
+        <activity android:name=".screenSuplier.AddCompanyActivity" />
         <activity android:name=".screenSuplier.MainSuplierActivity" />
         <activity android:name=".screenMain.RecoveryPassword" />
         <activity android:name=".screenMain.screenSignup1" />

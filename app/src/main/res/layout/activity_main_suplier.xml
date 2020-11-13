@@ -10,7 +10,6 @@
         android:id="@+id/container_supplier"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:name="@android."
         app:layout_constraintBottom_toTopOf="@+id/bottom_navegation_view_suplier_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
