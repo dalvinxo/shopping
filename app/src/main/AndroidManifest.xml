@@ -2,18 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shopping">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_supleconsu_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".screenSuplier.SecondSuplierActivity"></activity>
-        <activity android:name=".screenSuplier.AddCompanyActivity" />
-        <activity android:name=".screenSuplier.MainSuplierActivity" />
-        <activity android:name=".screenMain.RecoveryPassword" />
-        <activity android:name=".screenMain.screenSignup1" />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".screenSuplier.AddCategoryActivity"></activity>
+        <activity android:name=".screenSuplier.EditAndDeleteCategoryActivity" />
+        <activity
+            android:name=".screenSuplier.SecondSuplierActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screenSuplier.AddCompanyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screenSuplier.MainSuplierActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screenMain.RecoveryPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".screenMain.screenSignup1"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screenMain.ScreenSignup"
             android:screenOrientation="portrait" />

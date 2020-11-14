@@ -121,11 +121,11 @@ tools:layout_editor_absoluteX="0dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tf_loginEmail"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:hint="Email"
         app:boxStrokeColor="#9CB9BF"
         app:boxStrokeErrorColor="#B31433"
@@ -146,11 +146,11 @@ tools:layout_editor_absoluteX="0dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tf_loginPassword"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:hint="Password"
         app:boxStrokeColor="#9CB9BF"
         app:boxStrokeErrorColor="#B31433"

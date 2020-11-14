@@ -38,7 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <androidx.appcompat.widget.Toolbar
+           <!-- <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_product_company"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -46,8 +46,24 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_back_company"
                 app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/menu_top_search" />
+                app:menu="@menu/menu_top_search" />-->
 
+
+            <TextView
+                android:id="@+id/title_second_main_suplier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
+                android:paddingHorizontal="10dp"
+                android:text="Category"
+                android:textColor="#F7F8FF"
+                android:textSize="22sp"
+                app:fontFamily="@font/chicle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.526" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

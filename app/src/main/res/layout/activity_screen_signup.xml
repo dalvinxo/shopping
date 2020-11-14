@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".screenMain.ScreenSignup"
     android:background="#DFE4E6"
+    android:id="@+id/snabackviewSignup"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -101,8 +102,36 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tf_signupEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Email"
+                app:boxStrokeColor="#9CB9BF"
+                app:boxStrokeErrorColor="#B31433"
+                app:boxStrokeWidth="2dp"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="40"
+                app:startIconDrawable="@drawable/ic_email"
+                android:elevation="1dp"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tf_signupUser"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -113,6 +142,8 @@
                 app:boxStrokeWidth="2dp"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
                 app:startIconDrawable="@drawable/ic_email"
                 android:elevation="1dp"
                 >
@@ -136,7 +167,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tf_signupFirstName"
                     android:layout_weight="1"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="First Name"
@@ -145,6 +176,8 @@
                     app:boxStrokeWidth="2dp"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="30"
                     android:layout_marginHorizontal="2dp"
                     app:startIconDrawable="@drawable/ic_email"
                     android:elevation="1dp"
@@ -160,7 +193,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tf_signupLastName"
                     android:layout_weight="1"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="2dp"
@@ -170,6 +203,8 @@
                     app:boxStrokeWidth="2dp"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="30"
                     app:startIconDrawable="@drawable/ic_email"
                     android:elevation="1dp"
                     >
@@ -188,7 +223,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tf_signupPhone"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -199,6 +234,8 @@
                 app:boxStrokeWidth="2dp"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="15"
                 app:startIconDrawable="@drawable/ic_phone"
                 android:elevation="1dp"
                 >
@@ -207,14 +244,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"
-                    app:met_mask="+1 (###) ###-####" />
+                    app:met_mask="+1 ###-###-####" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tf_signupAddress"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -226,6 +263,8 @@
                 app:errorEnabled="true"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_flecha_right"
+                app:counterEnabled="true"
+                app:counterMaxLength="80"
                 android:elevation="1dp"
                 >
 
@@ -240,7 +279,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tf_SignupPassword"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
@@ -251,6 +290,8 @@
                 app:boxStrokeWidth="2dp"
                 app:endIconMode="password_toggle"
                 app:errorEnabled="true"
+                app:counterEnabled="true"
+                app:counterMaxLength="40"
                 app:startIconDrawable="@drawable/ic_password"
                 android:elevation="1dp"
                 >

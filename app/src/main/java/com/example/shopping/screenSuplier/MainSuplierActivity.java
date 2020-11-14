@@ -2,10 +2,13 @@ package com.example.shopping.screenSuplier;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.shopping.GlobalUsuario;
 import com.example.shopping.R;
 import com.example.shopping.screenSuplier.fragments.FragmentAccount;
 import com.example.shopping.screenSuplier.fragments.FragmentBusiness;
@@ -16,10 +19,12 @@ public class MainSuplierActivity extends AppCompatActivity implements BottomNavi
 
     BottomNavigationView bottomNavigationView;
 
+
     //Fragments
     FragmentBusiness company = new FragmentBusiness();
     FragmentAccount profile = new FragmentAccount();
     FragmentLogout logout = new FragmentLogout();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +32,13 @@ public class MainSuplierActivity extends AppCompatActivity implements BottomNavi
         setContentView(R.layout.activity_main_suplier);
 
         bottomNavigationView = findViewById(R.id.bottom_navegation_view_suplier_main);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_company);
 
+
+        String id = String.valueOf(GlobalUsuario.idusuario);
+        Toast.makeText(MainSuplierActivity.this,"id: "+id+" name: "+GlobalUsuario.username,Toast.LENGTH_SHORT).show();
     }
 
 

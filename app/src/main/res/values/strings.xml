@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">shopping</string>
     <string name="back">Back</string>
+    <string name="string_infoApp">
+        <h1>Start Buying</h1>\n\n
+        It is an app that offers you the facility to sell your products or buy products through it. \n\n
+
+It is the virtual purchase and sale that everyone should have to facilitate marketing, publicize their company, or learn about new products first-hand by entrepreneurs. \n\n
+
+It has two types of users: \n\n
+
+Provider or Supplier: \n\n
+If what you want is to start and publicize your products, this is the best option for you, allowing you to show consumers what you offer, and at the same time ordering them yourself.
+\n\n
+
+Consumer: \n\n
+If what you want is to know the new features and products that the market offers, it is the perfect option that you should choose.
+
+    </string>
     <string name="terminosPoliticy">
         TERMINOS Y CONDICIONES DE USO DE LA APLICACIÓN\n\n
 Estos Términos y Condiciones regulan la descarga, acceso y utilización de la app (el uso de la mismo esta bajo responsabilidad suya), que ITLA STudio, I.S. ponen a disposición de los usuarios.
@@ -54,5 +70,6 @@ El usuario acepta que la legislación aplicable y los Juzgados y Tribunales comp
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="accept">Accept</string>
 
 </resources>
