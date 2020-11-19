@@ -1,5 +1,6 @@
 package com.example.shopping.screenSuplier.fragments_second;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -18,10 +20,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.shopping.GlobalUsuario;
 import com.example.shopping.R;
 import com.example.shopping.screenMain.Login;
 import com.example.shopping.screenSuplier.AddCategoryActivity;
 import com.example.shopping.screenSuplier.AddCompanyActivity;
+import com.example.shopping.screenSuplier.Facade.FactoryMaker;
 import com.example.shopping.screenSuplier.MainSuplierActivity;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCategoryModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCompanyModelo;
@@ -31,26 +35,36 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class FragmentCategory extends Fragment {
 
+    ProgressDialog progressDialog;
+    Handler handler;
+    Timer timer;
+    Runnable runnable;
+    int e;
+
     View v;
     Context context;
+
     public FragmentCategory(Context context) {
         this.context = context;
         // Required empty public constructor
     }
-
+    FactoryMaker Facade;
     Button addCategory;
 
     RecyclerView recyclerView;
     RecyclerViewAdapterCategory recyclerViewAdapterCategory;
-    ArrayList<EntityCategoryModelo> categoryModeloArrayList;
     LinearLayoutManager linearLayoutManager;
 
+    ArrayList<EntityCategoryModelo> categoryModeloArrayList;
 
-
+    String url = "https://startbuying.000webhostapp.com/Allcategory.php";
+    String idCompany;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,28 +75,81 @@ public class FragmentCategory extends Fragment {
         addCategory = v.findViewById(R.id.btn_addCompany_category);
         recyclerView = v.findViewById(R.id.recyclerCompany_category);
 
-        categoryModeloArrayList = new ArrayList<>();
-        categoryModeloArrayList.add(new EntityCategoryModelo("Carne","1","23"));
-        categoryModeloArrayList.add(new EntityCategoryModelo("Bebida","2","21"));
-
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerViewAdapterCategory = new RecyclerViewAdapterCategory(categoryModeloArrayList,getActivity());
-        recyclerView.setAdapter(recyclerViewAdapterCategory);
+        idCompany = String.valueOf(GlobalUsuario.idCompany);
 
         addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //Toast.makeText(v.getContext(),"Ok",Toast.LENGTH_SHORT).show();
                 Intent start = new Intent(getActivity(), AddCategoryActivity.class);
                 startActivity(start);
-
-                //BottomDialogAddCategory();
             }
         });
 
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Facade = new FactoryMaker(getActivity(), url);
+        Facade.FactoryCategoryMethodAll(idCompany);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Progress();
+    }
+
+    private void Progress() {
+
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setTitle("Loading data...");
+            progressDialog.setMessage("Wait while your data loads");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+            progressDialog.setMax(100);
+
+            handler = new Handler();
+
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    e = e + 5;
+                    if (e <= 100) {
+                        progressDialog.setProgress(e);
+                    } else {
+                        timer.cancel();
+                        progressDialog.dismiss();
+                        e = 0;
+
+                        categoryModeloArrayList = new ArrayList<>();
+                        categoryModeloArrayList = Facade.getCategory();
+
+                        if (categoryModeloArrayList != null && !categoryModeloArrayList.isEmpty()) {
+                            linearLayoutManager = new LinearLayoutManager(getActivity());
+                            recyclerView.setLayoutManager(linearLayoutManager);
+                            recyclerViewAdapterCategory = new RecyclerViewAdapterCategory(categoryModeloArrayList, getActivity());
+                            recyclerView.setAdapter(recyclerViewAdapterCategory);
+                        }
+
+                    }
+
+                }
+            };
+
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(runnable);
+                }
+            }, 1000, 200);
+
+        }
+
     }
 
 
@@ -90,4 +157,3 @@ public class FragmentCategory extends Fragment {
 
 
 
-}

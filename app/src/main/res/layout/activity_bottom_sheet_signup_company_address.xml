@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/bottom_sheet_background"
-    android:id="@+id/bottomsheetContainer1"
+    android:id="@+id/bottomsheetContainer_company"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -56,15 +56,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <!-- <View
-         android:layout_width="match_parent"
-         android:layout_height="1dp"
-         android:layout_marginTop="1dp"
-         android:layout_marginBottom="10dp"
-         android:orientation="horizontal"
-         android:background="#000000"
-         />-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/et_cityCompany"
@@ -183,6 +174,7 @@
         android:fontFamily="@font/amarante"
         android:paddingHorizontal="10dp"
         android:paddingVertical="6dp"
+        android:layout_marginBottom="10dp"
         android:text="Send"
         android:textColor="#DDE2E4"
         android:textSize="20sp"
@@ -193,4 +185,4 @@
         app:rippleColor="#536DFE" />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>

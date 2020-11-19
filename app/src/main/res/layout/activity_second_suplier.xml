@@ -21,13 +21,13 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_back_company"
+                android:id="@+id/btn_back_supplier_second"
                 style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="@string/back"
+                android:text="Home"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"

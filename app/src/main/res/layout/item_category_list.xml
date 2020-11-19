@@ -37,6 +37,23 @@
             android:layout_marginLeft="10dp" />
 
         <TextView
+            android:id="@+id/item_descripcionCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="1"
+            android:visibility="gone"
+            android:layout_marginStart="10dp"
+            android:textColor="#1B252F"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints"
+            android:layout_marginLeft="10dp" />
+
+
+        <TextView
             android:id="@+id/item_nameCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

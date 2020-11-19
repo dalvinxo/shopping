@@ -3,14 +3,19 @@ package com.example.shopping.screenSuplier;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.shopping.GlobalUsuario;
 import com.example.shopping.R;
 import com.example.shopping.screenSuplier.fragments_second.FragmentCategory;
 import com.example.shopping.screenSuplier.fragments_second.FragmentOrder;
@@ -27,7 +32,7 @@ public class SecondSuplierActivity extends AppCompatActivity implements BottomNa
     FragmentProduct fragmentProduct = new FragmentProduct();
     FragmentOrder fragmentOrder = new FragmentOrder();
     FragmentSetting fragmentSetting = new FragmentSetting();
-
+    Button back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +45,27 @@ public class SecondSuplierActivity extends AppCompatActivity implements BottomNa
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_company_category);
+        back = findViewById(R.id.btn_back_supplier_second);
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sc = new Intent(SecondSuplierActivity.this,MainSuplierActivity.class);
+                sc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(sc);
 
-
-
-
-
+            }
+        });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent sc = new Intent(SecondSuplierActivity.this,MainSuplierActivity.class);
+        sc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(sc);
+    }
 
-   /* @Override
+    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_top_search,menu);
         MenuItem item =  menu.findItem(R.id.action_search);

@@ -3,11 +3,11 @@ package com.example.shopping.screenSuplier.UtilidadesListView;
 public class EntityCompanyModelo {
 
     String name,phone,country,address,link;
-    int Imagen;
+    String Imagen;
     String estado;
     String order,id;
 
-    public EntityCompanyModelo(String name, String phone, String country, String address, String link, int imagen, String estado, String order, String id) {
+    public EntityCompanyModelo(String name, String phone, String country, String address, String link, String imagen, String estado, String order, String id) {
         this.name = name;
         this.phone = phone;
         this.country = country;
@@ -60,11 +60,11 @@ public class EntityCompanyModelo {
         this.link = link;
     }
 
-    public int getImagen() {
+    public String getImagen() {
         return Imagen;
     }
 
-    public void setImagen(int imagen) {
+    public void setImagen(String imagen) {
         Imagen = imagen;
     }
 

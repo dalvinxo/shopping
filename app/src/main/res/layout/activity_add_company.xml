@@ -137,7 +137,6 @@
                 android:layout_gravity="center_horizontal"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:onClick="saveimagen"
                 android:scaleType="fitXY"
                 android:src="@drawable/add_photopng"
                 app:riv_corner_radius="20dp" />
@@ -151,10 +150,12 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"
                 android:elevation="1dp"
-                android:hint="Username"
+                android:hint="Name Company"
                 app:boxStrokeColor="#0005BF"
                 app:boxStrokeErrorColor="#B31433"
                 app:boxStrokeWidth="2dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 app:startIconDrawable="@drawable/ic_store">
@@ -192,7 +193,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_linkCompany"
+                android:id="@+id/et_SocialNetworkCompany"
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -225,6 +226,8 @@
                 android:elevation="1dp"
                 android:hint="Country"
                 app:boxStrokeColor="#0005BF"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
                 app:boxStrokeErrorColor="#B31433"
                 app:boxStrokeWidth="2dp"
                 app:endIconMode="dropdown_menu"

@@ -10,11 +10,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.shopping.GlobalUsuario;
-import com.example.shopping.screenMain.screenSignup1;
 import com.example.shopping.screenSuplier.Facade.IFactory;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCategoryModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCompanyModelo;
+import com.example.shopping.screenSuplier.UtilidadesListView.EntityProductModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityProductModelo;
 
 import org.json.JSONArray;
@@ -25,13 +24,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FactoryCategory implements IFactory {
+public class FactoryProduct implements IFactory {
 
     Context context;
-    ArrayList<EntityCategoryModelo> categoryModeloArrayList;
+    ArrayList<EntityProductModelo> productModeloArrayList;
     String url;
 
-    public FactoryCategory(Context context, String url) {
+    public FactoryProduct(Context context, String url) {
         this.context = context;
         this.url = url;
     }
@@ -42,21 +41,25 @@ public class FactoryCategory implements IFactory {
             @Override
             public void onResponse(String response) {
                 if (response != null) {
+                    //Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                 }
+                //Toast.makeText(context, "La consulta no retorna nada.", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               // Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parametros = new HashMap<String, String>();
-                parametros.put("name_category", datos[0]);
-                parametros.put("descripcion_category", datos[1]);
-                parametros.put("id_company", datos[2]);
+                parametros.put("image", datos[0]);
+                parametros.put("name_product", datos[1]);
+                parametros.put("description_product", datos[2]);
+                parametros.put("price_product", datos[3]);
+                parametros.put("id_category", datos[4]);
                 return parametros;
 
             }
@@ -64,7 +67,6 @@ public class FactoryCategory implements IFactory {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(con);
     }
-
 
     @Override
     public void Delete(final String id) {
@@ -118,6 +120,9 @@ public class FactoryCategory implements IFactory {
                 parametros.put("id", datos[0]);
                 parametros.put("name", datos[1]);
                 parametros.put("description", datos[2]);
+                parametros.put("price", datos[3]);
+                parametros.put("idcategory", datos[4]);
+                parametros.put("image", datos[5]);
                 return parametros;
 
             }
@@ -133,41 +138,42 @@ public class FactoryCategory implements IFactory {
 
     @Override
     public void AllSpecific(final String idCompany) {
-        StringRequest con = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
+        final StringRequest con = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response != null) {
 
                     try {
                         JSONArray array = new JSONArray(response);
-                        categoryModeloArrayList = new ArrayList<>();
+                        productModeloArrayList = new ArrayList<>();
 
                         for(int i=0; i < array.length(); i++){
 
                             JSONObject row = array.getJSONObject(i);
-
                             String id = String.valueOf(row.getInt("id"));
-                            String name = row.getString("name_category");
-                            String description= row.getString("description_category");
-                            String cantidad = row.getString("totalProduct");
+                            String description = row.getString("description");
+                            String name = row.getString("name");
+                            String price = row.getString("price");
+                            String image = row.getString("image");
+                            String namecategory = row.getString("category");
 
-                           categoryModeloArrayList.add(new EntityCategoryModelo(
-                                    name,cantidad,id,description
-                            ));
+                            String url = "https://startbuying.000webhostapp.com/Images/"+image;
+
+                            productModeloArrayList.add(new EntityProductModelo(id,description,name,price,
+                                    url,namecategory));
 
                         }
 
                     } catch (JSONException ex) {
-                       Log.i("Error data",ex.getMessage().toString());
-                        //ex.printStackTrace();
+                        Log.i("Error View Data", ex.toString());
                     }
+
                 }
-                //Toast.makeText(context, "La consulta no retorna nada.", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("Error data",error.getMessage().toString());
+                Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -183,8 +189,9 @@ public class FactoryCategory implements IFactory {
     }
 
 
-    public ArrayList<EntityCategoryModelo> categorysArrayList(){
-        return categoryModeloArrayList;
+    @Override
+    public ArrayList<EntityCategoryModelo> categorysArrayList() {
+        return null;
     }
 
     @Override
@@ -194,8 +201,10 @@ public class FactoryCategory implements IFactory {
 
     @Override
     public ArrayList<EntityProductModelo> productArrayList() {
-        return null;
+        Log.i("Data", "Mostrando Company");
+        return productModeloArrayList;
     }
+
 
 
 }

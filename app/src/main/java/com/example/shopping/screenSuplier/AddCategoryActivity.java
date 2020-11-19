@@ -67,15 +67,14 @@ public class AddCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String idUsuario = String.valueOf(GlobalUsuario.idusuario);
-                String[] categorys = {$nameCategory,$descripcionCategory, idUsuario};
+                String id_company = String.valueOf(GlobalUsuario.idCompany);
+                String[] categorys = {$nameCategory,$descripcionCategory, id_company};
 
                 Facade = new FactoryMaker(AddCategoryActivity.this, url);
                 Facade.FactoryCategoryMethodCreate(categorys);
 
                 progressDialog = new ProgressDialog(AddCategoryActivity.this);
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.setTitle("Add Category");
                 progressDialog.setMessage("Add the category: "+$nameCategory);
                 progressDialog.setIndeterminate(false);
                 progressDialog.setCanceledOnTouchOutside(false);
@@ -107,7 +106,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                     public void run() {
                         handler.post(runnable);
                     }
-                },2000,200);
+                },2000,100);
 
             }
         });
@@ -178,12 +177,6 @@ public class AddCategoryActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    private void Progress(){
-
-
-
     }
 
 

@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.shopping.GlobalUsuario;
 import com.example.shopping.R;
 import com.example.shopping.screenSuplier.SecondSuplierActivity;
 import com.google.android.material.card.MaterialCardView;
@@ -41,11 +43,11 @@ public class RecyclerViewAdapterCompany extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapterCompany.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerViewAdapterCompany.ViewHolder holder, int position) {
         holder.name.setText(listCompany.get(position).getName());
         holder.phone.setText(listCompany.get(position).getPhone());
-        holder.imagen.setImageResource(listCompany.get(position).getImagen());
-        holder.country.setText(listCompany.get(position).country);
+        Glide.with(context).load(listCompany.get(position).getImagen()).into(holder.imagen);
+        holder.country.setText(listCompany.get(position).getCountry());
         holder.address.setText(listCompany.get(position).getAddress());
         holder.estado.setText(listCompany.get(position).getEstado());
         holder.link.setText(listCompany.get(position).getLink());
@@ -56,6 +58,8 @@ public class RecyclerViewAdapterCompany extends RecyclerView.Adapter<RecyclerVie
             @Override
             public void onClick(View v) {
                 Intent start = new Intent(context, SecondSuplierActivity.class);
+                String idCompany = holder.idcompany.getText().toString();
+                GlobalUsuario.idCompany = Integer.parseInt(idCompany);
                 context.startActivity(start);
             }
         });
@@ -64,7 +68,7 @@ public class RecyclerViewAdapterCompany extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemCount() {
-        return listCompany.size();
+            return listCompany.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

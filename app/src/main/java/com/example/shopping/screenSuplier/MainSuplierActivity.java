@@ -1,5 +1,7 @@
 package com.example.shopping.screenSuplier;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -9,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.shopping.GlobalUsuario;
+import com.example.shopping.MainActivity;
 import com.example.shopping.R;
+import com.example.shopping.screenMain.Login;
 import com.example.shopping.screenSuplier.fragments.FragmentAccount;
 import com.example.shopping.screenSuplier.fragments.FragmentBusiness;
 import com.example.shopping.screenSuplier.fragments.FragmentLogout;
@@ -19,12 +23,10 @@ public class MainSuplierActivity extends AppCompatActivity implements BottomNavi
 
     BottomNavigationView bottomNavigationView;
 
-
     //Fragments
     FragmentBusiness company = new FragmentBusiness();
     FragmentAccount profile = new FragmentAccount();
     FragmentLogout logout = new FragmentLogout();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +38,25 @@ public class MainSuplierActivity extends AppCompatActivity implements BottomNavi
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_company);
 
-
-        String id = String.valueOf(GlobalUsuario.idusuario);
-        Toast.makeText(MainSuplierActivity.this,"id: "+id+" name: "+GlobalUsuario.username,Toast.LENGTH_SHORT).show();
+    }
+    private long backpressdtime;
+    Toast alert;
+    @Override
+    public void onBackPressed() {
+        if(backpressdtime + 2000 > System.currentTimeMillis()){
+            super.onBackPressed();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                Intent sc = new Intent(MainSuplierActivity.this, Login.class);
+                sc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(sc);
+            }
+            alert.cancel();
+            return;
+        }else{
+            alert = Toast.makeText(getApplicationContext(),"pressiona otra vez para cerrar sesión",Toast.LENGTH_SHORT);
+            alert.show();
+        }
+        backpressdtime = System.currentTimeMillis();
     }
 
 
@@ -69,4 +87,8 @@ public class MainSuplierActivity extends AppCompatActivity implements BottomNavi
 
         return false;
     }
+
+
+
+
 }

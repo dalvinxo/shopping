@@ -1,5 +1,7 @@
 package com.example.shopping.screenSuplier.fragments;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,34 +9,55 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.shopping.GlobalUsuario;
 import com.example.shopping.R;
 import com.example.shopping.screenMain.ScreenLogin;
 import com.example.shopping.screenSuplier.AddCompanyActivity;
+import com.example.shopping.screenSuplier.Facade.FactoryMaker;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCompanyModelo;
+import com.example.shopping.screenSuplier.UtilidadesListView.RecyclerViewAdapterCategory;
 import com.example.shopping.screenSuplier.UtilidadesListView.RecyclerViewAdapterCompany;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class FragmentBusiness extends Fragment {
 
     View v;
+    Context context;
+
     public FragmentBusiness(){
 
     }
+    ProgressDialog progressDialog;
+    Handler handler;
+    Timer timer;
+    Runnable runnable;
+    int e;
 
+    FactoryMaker Facade;
+
+    String idUsuario;
+
+    String url = "https://startbuying.000webhostapp.com/allCompany.php";
     FloatingActionButton addCompany;
 
     RecyclerView recyclerViewcompany;
-    RecyclerViewAdapterCompany adapterCompany;
-    ArrayList<EntityCompanyModelo> arrayListCompany;
-    LinearLayoutManager layoutManager;
+
+    RecyclerViewAdapterCompany recyclerViewAdapterCompany;
+    ArrayList<EntityCompanyModelo> companyModeloArrayList;
+    LinearLayoutManager linearLayoutManager;
 
 
 
@@ -47,28 +70,14 @@ public class FragmentBusiness extends Fragment {
         addCompany = v.findViewById(R.id.floating_add_company);
         recyclerViewcompany = (RecyclerView) v.findViewById(R.id.recyclerCompany);
 
-        arrayListCompany = new ArrayList<>();
-        arrayListCompany.add(new EntityCompanyModelo("La Sirena","(809) 895-2514",
-                "Republica Dominicana","Arroyo HN","www.company.com",R.drawable.logocompany,
-                "true","2","1"));
-
-        arrayListCompany.add(new EntityCompanyModelo("La Sirena","(809) 895-2514",
-                "Republica Dominicana","Arroyo HN","www.company.com",R.drawable.emojilove,
-                "true","2","1"));
-
-
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewcompany.setLayoutManager(layoutManager);
-        adapterCompany = new RecyclerViewAdapterCompany(getActivity(),arrayListCompany);
-        recyclerViewcompany.setAdapter(adapterCompany);
-
+        idUsuario = String.valueOf(GlobalUsuario.idusuario);
 
         addCompany.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent start = new Intent(getContext(),AddCompanyActivity.class);
                 startActivity(start);
-               // Toast.makeText(getContext(),"Hola mundo",Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -76,14 +85,74 @@ public class FragmentBusiness extends Fragment {
         return v;
     }
 
-    public ArrayList<EntityCompanyModelo> obtenerCompany(){
-        ArrayList<EntityCompanyModelo> company = new ArrayList<>();
-        company.add(new EntityCompanyModelo("La Sirena","(809) 895-2514",
-                "Republica Dominicana","Arroyo HN","www.company.com",R.drawable.logocompany,
-                "true","2","1"));
-
-        return company;
+    @Override
+    public void onStart() {
+        super.onStart();
+        Facade = new FactoryMaker(getActivity(), url);
+        Facade.FactoryCompanyMethodAll(idUsuario);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Progress();
+    }
+
+    private void Progress() {
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Loading data...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        progressDialog.setMax(100);
+
+        handler = new Handler();
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                e = e + 5;
+                if (e <= 100) {
+                    progressDialog.setProgress(e);
+                } else {
+                    timer.cancel();
+                    progressDialog.dismiss();
+                    e = 0;
+
+                    companyModeloArrayList = new ArrayList<>();
+                    companyModeloArrayList = Facade.getCompany();
+
+                    if (companyModeloArrayList != null && !companyModeloArrayList.isEmpty()) {
+
+                        linearLayoutManager= new LinearLayoutManager(getActivity());
+                        recyclerViewcompany.setLayoutManager(linearLayoutManager);
+                        recyclerViewAdapterCompany = new RecyclerViewAdapterCompany(getActivity(),companyModeloArrayList);
+                        recyclerViewcompany.setAdapter(recyclerViewAdapterCompany);
+
+                    } else {
+                        Log.e("Error", "Arraylist null o int 0 JsonError!!");
+                    }
+
+
+
+
+                }
+
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(runnable);
+            }
+        }, 1000, 200);
+
+    }
+
 
 
 }

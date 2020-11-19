@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.shopping.GlobalUsuario;
 import com.example.shopping.MainActivity;
 import com.example.shopping.R;
+import com.example.shopping.ScreenConsumer.MainConsumer;
 import com.example.shopping.screenSuplier.MainSuplierActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
@@ -149,7 +150,6 @@ public class Login extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.in_top,R.anim.out_top);
     }
 
     private void login_validacion() {
@@ -177,9 +177,10 @@ public class Login extends AppCompatActivity {
                     for(int i=0; i < array.length(); i++){
                         JSONObject row = array.getJSONObject(i);
                              int id = row.getInt("id_user");
+                             int type = row.getInt("type_user");
                              String name = row.getString("name_user");
                              String password = row.getString("password_user");
-                             new GlobalUsuario(id,name,password);
+                             new GlobalUsuario(id,name,password,type);
                         }
                         Progress();
                     } catch (JSONException ex) {
@@ -213,9 +214,17 @@ public class Login extends AppCompatActivity {
     }
 
     private void Enter(){
-        Intent start = new Intent(Login.this, MainSuplierActivity.class);
-        startActivity(start);
-        overridePendingTransition(R.anim.in_fade,R.anim.out_fade);
+
+        if(GlobalUsuario.typeUSER == 1){
+            Intent start = new Intent(Login.this, MainSuplierActivity.class);
+            startActivity(start);
+            overridePendingTransition(R.anim.in_fade,R.anim.out_fade);
+        }else{
+            Intent start = new Intent(Login.this, MainConsumer.class);
+            startActivity(start);
+            overridePendingTransition(R.anim.in_fade,R.anim.out_fade);
+        }
+
     }
 
     private void Progress(){
@@ -255,7 +264,7 @@ public class Login extends AppCompatActivity {
             public void run() {
                 handler.post(runnable);
             }
-        },2000,100);
+        },1000,200);
 
 
 
