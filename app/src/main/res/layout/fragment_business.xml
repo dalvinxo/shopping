@@ -22,7 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="#52597D"
-            app:backgroundTint="#2A397E"
+            app:backgroundTint="#40C4FF"
             app:srcCompat="@drawable/ic_add"
             app:fabSize="normal"
             app:pressedTranslationZ="8dp"

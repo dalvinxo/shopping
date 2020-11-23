@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerViewAdapterCategory.ViewHolder> {
 
 public ArrayList<EntityCategoryModelo> categoryModeloArrayList ;
-        Context context;
+    Context context;
 
 public RecyclerViewAdapterCategory(ArrayList<EntityCategoryModelo> categoryModeloArrayList, Context context) {
         this.categoryModeloArrayList = categoryModeloArrayList;

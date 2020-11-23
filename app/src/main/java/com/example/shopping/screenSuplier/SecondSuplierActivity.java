@@ -28,7 +28,7 @@ public class SecondSuplierActivity extends AppCompatActivity implements BottomNa
     TextView title;
     BottomNavigationView bottomNavigationView;
 
-    FragmentCategory fragmentCategory = new FragmentCategory(SecondSuplierActivity.this);
+    FragmentCategory fragmentCategory = new FragmentCategory();
     FragmentProduct fragmentProduct = new FragmentProduct();
     FragmentOrder fragmentOrder = new FragmentOrder();
     FragmentSetting fragmentSetting = new FragmentSetting();

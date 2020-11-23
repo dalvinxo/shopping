@@ -7,12 +7,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.shopping.GlobalUsuario;
 import com.example.shopping.R;
 import com.example.shopping.screenSuplier.Facade.FactoryMaker;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Timer;
@@ -68,17 +73,17 @@ public class EditAndDeleteCategoryActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Facade = new FactoryMaker(EditAndDeleteCategoryActivity.this,urlDelete);
-                Facade.FactoryCategoryMethodDelete(idCategory);
-                dialog();
+                bottomDialogDelete(idCategory);
             }
         });
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] date = {idCategory,$nameCategory,$descripcionCategory,"ok"};
+                        String $name, $description;
+                        $name = nameCategory.getEditText().getText().toString();
+                        $description = descripcionCategory.getEditText().getText().toString();
+                        String[] date = {idCategory,$name,$description};
 
                 Facade = new FactoryMaker(EditAndDeleteCategoryActivity.this,urlEdit);
                 Facade.FactoryCategoryMethodUpdate(date);
@@ -90,6 +95,39 @@ public class EditAndDeleteCategoryActivity extends AppCompatActivity {
 
     }
 
+    private void bottomDialogDelete(final String id) {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(EditAndDeleteCategoryActivity.this, R.style.BottomSheetDialogTheme);
+        View bottomsheetView = LayoutInflater.from(EditAndDeleteCategoryActivity.this)
+                .inflate(R.layout.layout_alert_delete, (LinearLayout) findViewById(R.id.bottom_sheet_alert_delete));
+
+        Button yes= bottomsheetView.findViewById(R.id.bottom_delete_btnYes);
+        Button no= bottomsheetView.findViewById(R.id.bottom_delete_btnNo);
+
+        TextView info = bottomsheetView.findViewById(R.id.bottom_delete_info);
+
+        info.setText("You want to permanently remove this category.");
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Facade = new FactoryMaker(EditAndDeleteCategoryActivity.this,urlDelete);
+                Facade.FactoryCategoryMethodDelete(id);
+                dialog();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        bottomSheetDialog.setCanceledOnTouchOutside(false);
+        bottomSheetDialog.setContentView(bottomsheetView);
+        bottomSheetDialog.show();
+    }
 
 
     private TextWatcher validationTextWatcher = new TextWatcher() {

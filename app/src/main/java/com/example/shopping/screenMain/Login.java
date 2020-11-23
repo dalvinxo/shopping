@@ -1,16 +1,12 @@
 package com.example.shopping.screenMain;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -21,11 +17,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shopping.GlobalUsuario;
-import com.example.shopping.MainActivity;
 import com.example.shopping.R;
-import com.example.shopping.ScreenConsumer.MainConsumer;
+import com.example.shopping.ScreenConsumer.activity.MainConsumer;
 import com.example.shopping.screenSuplier.MainSuplierActivity;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
@@ -175,12 +169,18 @@ public class Login extends AppCompatActivity {
                                 "email_usuario": "dalvingamer@gmail.com"*/
 
                     for(int i=0; i < array.length(); i++){
-                        JSONObject row = array.getJSONObject(i);
+
+                             JSONObject row = array.getJSONObject(i);
+
                              int id = row.getInt("id_user");
                              int type = row.getInt("type_user");
                              String name = row.getString("name_user");
+                             String firstName = row.getString("firtName_user");
+                             String lastName = row.getString("lastName_user");
                              String password = row.getString("password_user");
-                             new GlobalUsuario(id,name,password,type);
+                             String phone = row.getString("phone_user");
+
+                             new GlobalUsuario(id,name,password,type,lastName,firstName,phone);
                         }
                         Progress();
                     } catch (JSONException ex) {
@@ -271,51 +271,5 @@ public class Login extends AppCompatActivity {
     }
 
 
-    /* private void alertSignup(){
-
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder (Login.this,android.R.style.Theme_Material_Dialog_NoActionBar);
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.activity_signup,null);
-        builder.setView(view);
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-
-        final CheckBox check = view.findViewById(R.id.politeCheckbox);
-        MaterialButton aceptar = view.findViewById(R.id.politeAceptada);
-        MaterialButton cancelar = view.findViewById(R.id.politeRechazada);
-
-        aceptar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (check.isChecked()){
-                    Toast.makeText(getApplicationContext(),"politicas aceptadas",Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                    dialogcorreo();
-
-                }else{
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),"Debes aceptar nuestras politica",Toast.LENGTH_SHORT).show();
-
-                        }
-                    },1000);
-                }
-
-            }
-        });
-
-
-
-        cancelar.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-    }
-*/
 
 }

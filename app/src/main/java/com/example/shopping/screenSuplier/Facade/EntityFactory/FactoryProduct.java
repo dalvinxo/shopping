@@ -110,7 +110,7 @@ public class FactoryProduct implements IFactory {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
             }
         }) {

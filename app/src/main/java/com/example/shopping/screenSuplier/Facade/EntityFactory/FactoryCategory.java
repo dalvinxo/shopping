@@ -1,8 +1,11 @@
 package com.example.shopping.screenSuplier.Facade.EntityFactory;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -24,6 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class FactoryCategory implements IFactory {
 
@@ -47,7 +51,7 @@ public class FactoryCategory implements IFactory {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               // Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -79,7 +83,7 @@ public class FactoryCategory implements IFactory {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -101,15 +105,14 @@ public class FactoryCategory implements IFactory {
             @Override
             public void onResponse(String response) {
                 if (response != null) {
-                    //Toast.makeText(context, "save", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "save", Toast.LENGTH_SHORT).show();
                 }
-                //Toast.makeText(context, "La consulta no retorna nada.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "La consulta no retorna nada.", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
-
+                Log.i("data",error.toString());
             }
         }) {
             @Override
@@ -134,6 +137,7 @@ public class FactoryCategory implements IFactory {
     @Override
     public void AllSpecific(final String idCompany) {
         StringRequest con = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onResponse(String response) {
                 if (response != null) {
@@ -158,7 +162,7 @@ public class FactoryCategory implements IFactory {
                         }
 
                     } catch (JSONException ex) {
-                       Log.i("Error data",ex.getMessage().toString());
+                       Log.i("data", Objects.requireNonNull(ex.getMessage()));
                         //ex.printStackTrace();
                     }
                 }
@@ -167,7 +171,7 @@ public class FactoryCategory implements IFactory {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("Error data",error.getMessage().toString());
+                Log.i("data",error.toString());
             }
         }) {
             @Override
@@ -181,6 +185,7 @@ public class FactoryCategory implements IFactory {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(con);
     }
+
 
 
     public ArrayList<EntityCategoryModelo> categorysArrayList(){

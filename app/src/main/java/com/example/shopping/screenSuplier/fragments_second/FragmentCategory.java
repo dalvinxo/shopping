@@ -48,12 +48,7 @@ public class FragmentCategory extends Fragment {
     int e;
 
     View v;
-    Context context;
 
-    public FragmentCategory(Context context) {
-        this.context = context;
-        // Required empty public constructor
-    }
     FactoryMaker Facade;
     Button addCategory;
 

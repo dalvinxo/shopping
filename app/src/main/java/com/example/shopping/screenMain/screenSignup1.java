@@ -60,37 +60,20 @@ public class screenSignup1 extends AppCompatActivity {
         radioGroup = findViewById(R.id.rg_users);
         Bundle user_cp = getIntent().getExtras();
 
-        int usertype = radioGroup.getCheckedRadioButtonId();
-        radioButton = findViewById(usertype);
-
-        String $user_type = radioButton.getText().toString();
-
-        int idtypeUsuario = 0;
-        if ($user_type.equalsIgnoreCase("Supplier")) {
-            idtypeUsuario = 1;
-        } else {
-            idtypeUsuario = 2;
-        }
-
-        String $user_type1 = String.valueOf(idtypeUsuario);
-
         datos[0] = "";
         datos[1] = user_cp.getString("username");
         datos[2] = user_cp.getString("password");
         datos[3] = user_cp.getString("firstname");
         datos[4] = user_cp.getString("lastname");
         datos[5] = user_cp.getString("address");
-        if(user_cp.getString("postal").isEmpty()){
+        if(user_cp.getString("postal") == null){
             datos[6] = "21102";
         }else{
             datos[6] = user_cp.getString("postal");
         }
-        datos[7] = $user_type1;
         datos[8] = user_cp.getString("statususer");
         datos[9] = user_cp.getString("phone");
         datos[10] = user_cp.getString("email");
-
-
 
         help.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,9 +97,15 @@ public class screenSignup1 extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int usertype = radioGroup.getCheckedRadioButtonId();
+                radioButton = findViewById(usertype);
+                String $user_type = radioButton.getText().toString();
+                if ($user_type.equalsIgnoreCase("Supplier")) {
+                  datos[7] = "1";
+                } else {
+                    datos[7] = "2";
+                }
                 insertar();
-
                 progressDialog = new ProgressDialog(v.getContext());
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 progressDialog.setIndeterminate(false);
@@ -138,6 +127,8 @@ public class screenSignup1 extends AppCompatActivity {
                             timer.cancel();
                             progressDialog.dismiss();
                             e=0;
+
+
 
                             Intent start = new Intent(screenSignup1.this, Login.class);
                             overridePendingTransition(R.anim.in_top,R.anim.out_top);

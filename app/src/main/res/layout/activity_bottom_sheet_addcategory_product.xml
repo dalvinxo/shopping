@@ -124,7 +124,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btn_addCategoryproduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -139,8 +139,8 @@
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold|italic"
-                android:visibility="gone"
                 app:boxStrokeColor="#000000"
+                android:visibility="gone"
                 app:boxStrokeWidth="2dp"
                 app:boxStrokeWidthFocused="4dp"
                 app:cornerRadius="10dp"

@@ -73,6 +73,7 @@ public class FactoryMaker {
     public void FactoryProductMethodDelete(String id_date) {
         FactoryProduct.Delete(id_date);
     }
+
     public void FactoryProductMethodUpdate(String[] date) {
         FactoryProduct.Edit(date);
     }

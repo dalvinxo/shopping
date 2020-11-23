@@ -1,8 +1,5 @@
 package com.example.shopping.screenSuplier;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,7 +20,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -95,10 +96,12 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
     Drawable lastImage;
 
     //Edit product
-    String name_product, description_product, price_product,image_product;
+    String name_product, description_product, price_product;
+    String image_product = null;
+
     String idCategory;
 
-    String idProduct= "";
+    String idProduct = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,10 +121,15 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         roundedImageView = findViewById(R.id.riv_photoProduct_edit);
         nameCategory = findViewById(R.id.sp_categoryProduct_edit);
 
+        name_product = var.getString("name");
+        description_product = var.getString("description");
+        price_product = var.getString("price");
+        idProduct = var.getString("id");
+
         name.getEditText().setText(var.getString("name"));
         description.getEditText().setText(var.getString("description"));
         price.getEditText().setText(var.getString("price"));
-        idProduct = var.getString("id");
+
 
         Glide.with(EditAndDeleteProductActivity.this).load(var.getString("image")).into(roundedImageView);
 
@@ -139,9 +147,8 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Facade = new FactoryMaker(EditAndDeleteProductActivity.this,url_deleteProduct);
-                Facade.FactoryProductMethodDelete(idProduct);
-                dialog();
+
+                bottomDialogDelete(idProduct);
             }
         });
 
@@ -177,21 +184,37 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
             }
         });
 
+        lastImage = roundedImageView.getDrawable();
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (validationProduct()){
+                if (validationProduct()) {
 
-                        image_product = encodedImage;
-                        String[] dates = {image_product,name_product,description_product,price_product,idCategory};
+                    String[] dates = new String[6];
 
-                        String urlCreatedProduct = "https://startbuying.000webhostapp.com/createProduct.php";
+                    image_product = encodedImage;
 
-                        Facade= new FactoryMaker(EditAndDeleteProductActivity.this, urlCreatedProduct);
-                        Facade.FactoryProductMethodCreated(dates);
-                        dialog();
+                    if(image_product == null){
+                     image_product = "nada";
+                    }
+
+                    dates[0] = idProduct;
+                    dates[1] = name_product;
+                    dates[2] = description_product;
+                    dates[3] = price_product;
+                    dates[4] = idCategory;
+                     dates[5] = image_product;
+
+
+                    /*Toast.makeText(EditAndDeleteProductActivity.this,
+                            dates[0]+"\n"+dates[1]+"\n"+dates[2]+"\n"+dates[3]+"\n"+
+                                    dates[4]+"\n"+dates[5],Toast.LENGTH_SHORT).show();*/
+
+                    Facade = new FactoryMaker(EditAndDeleteProductActivity.this, url_editProduct);
+                    Facade.FactoryProductMethodUpdate(dates);
+                    dialog();
 
 
                 }
@@ -206,21 +229,14 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
             }
         });
 
-
         nameCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //String idc = String.valueOf(idcategorys[position]);
-                //Toast.makeText(parent.getContext(),idc,Toast.LENGTH_SHORT).show();
-
                 String cat = parent.getItemAtPosition(position).toString();
-
                 if(cat.equalsIgnoreCase("No Category")){
                     idCategory = null;
                 }else{
                     idCategory = String.valueOf(idcategorys[position]);
-                    //Toast.makeText(parent.getContext(),idCategory,Toast.LENGTH_SHORT).show();
-
                 }
 
             }
@@ -399,19 +415,16 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
                 if (response != null) {
 
                     try {
-                        JSONArray array = new JSONArray(response);
 
+                        JSONArray array = new JSONArray(response);
                         categorysnames = new String[array.length()];;
                         idcategorys = new int[array.length()];
                         int i;
+
                         for(i=0; i < array.length(); i++){
-
                             JSONObject row = array.getJSONObject(i);
-
                             categorysnames[i] = row.getString("name_category");
                             idcategorys[i] = row.getInt("id_category");
-
-
                         }
 
                     } catch (JSONException ex) {
@@ -483,14 +496,48 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
 
     }
 
+    private void bottomDialogDelete(final String idProducts) {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(EditAndDeleteProductActivity.this, R.style.BottomSheetDialogTheme);
+        View bottomsheetView = LayoutInflater.from(EditAndDeleteProductActivity.this)
+                .inflate(R.layout.layout_alert_delete, (LinearLayout) findViewById(R.id.bottom_sheet_alert_delete));
+
+        Button yes = bottomsheetView.findViewById(R.id.bottom_delete_btnYes);
+        Button no = bottomsheetView.findViewById(R.id.bottom_delete_btnNo);
+
+        TextView info = bottomsheetView.findViewById(R.id.bottom_delete_info);
+
+        info.setText("You want to permanently remove this product.");
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Facade = new FactoryMaker(EditAndDeleteProductActivity.this, url_deleteProduct);
+                Facade.FactoryProductMethodDelete(idProducts);
+                dialog();
+            }
+        });
+
+        no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        bottomSheetDialog.setCanceledOnTouchOutside(false);
+        bottomSheetDialog.setContentView(bottomsheetView);
+        bottomSheetDialog.show();
+    }
+
     private void BottomDialog() {
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(EditAndDeleteProductActivity.this, R.style.BottomSheetDialogTheme);
         View bottomsheetView = LayoutInflater.from(EditAndDeleteProductActivity.this)
                 .inflate(R.layout.activity_bottom_sheet_addcategory_product, (LinearLayout) findViewById(R.id.bottom_sheetaddcategoryproduct));
 
-        save= bottomsheetView.findViewById(R.id.btn_addCategoryproduct);
-        close= bottomsheetView.findViewById(R.id.btn_cancelAddproductcc);
+        save = bottomsheetView.findViewById(R.id.btn_addCategoryproduct);
+        close = bottomsheetView.findViewById(R.id.btn_cancelAddproductcc);
 
         namebottom = bottomsheetView.findViewById(R.id.et_nameCategoryproduct);
         descriptionbottom = bottomsheetView.findViewById(R.id.et_descripcionCategoryproduct);
