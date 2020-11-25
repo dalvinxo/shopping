@@ -135,9 +135,6 @@ public class FragmentBusiness extends Fragment {
                         Log.e("Error", "Arraylist null o int 0 JsonError!!");
                     }
 
-
-
-
                 }
 
             }
@@ -149,7 +146,7 @@ public class FragmentBusiness extends Fragment {
             public void run() {
                 handler.post(runnable);
             }
-        }, 1000, 200);
+        }, 1000, 300);
 
     }
 

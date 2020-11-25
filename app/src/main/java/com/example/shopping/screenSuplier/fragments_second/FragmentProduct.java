@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -60,6 +62,8 @@ public class FragmentProduct extends Fragment {
     ArrayList<EntityProductModelo> productModeloArrayList;
     String idCompany;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +72,23 @@ public class FragmentProduct extends Fragment {
 
             addProduct = v.findViewById(R.id.btn_addCompany_product);
             recyclerView = v.findViewById(R.id.recyclerCompany_product);
+            swipeRefreshLayout = v.findViewById(R.id.swipe_refresh);
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    onStart();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            swipeRefreshLayout.setRefreshing(false);
+
+                        }
+                    },5000);
+                }
+            });
+
 
 
             idCompany = String.valueOf(GlobalUsuario.idCompany);
@@ -132,7 +153,7 @@ public class FragmentProduct extends Fragment {
                         recyclerView.setAdapter(recyclerViewAdapterProduct);
 
                     } else {
-                        Log.e("Error", "Arraylist null o int 0 JsonError!!");
+                        Toast.makeText(getActivity(),"ArrayListVacio",Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -145,7 +166,7 @@ public class FragmentProduct extends Fragment {
             public void run() {
                 handler.post(runnable);
             }
-        }, 1000, 200);
+        }, 2000, 100);
     }
 
 

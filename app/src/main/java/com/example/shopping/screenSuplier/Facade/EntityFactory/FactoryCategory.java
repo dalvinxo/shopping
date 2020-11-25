@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -18,6 +19,7 @@ import com.example.shopping.screenMain.screenSignup1;
 import com.example.shopping.screenSuplier.Facade.IFactory;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCategoryModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCompanyModelo;
+import com.example.shopping.screenSuplier.UtilidadesListView.EntityOrderModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityProductModelo;
 
 import org.json.JSONArray;
@@ -107,7 +109,7 @@ public class FactoryCategory implements IFactory {
                 if (response != null) {
                     Toast.makeText(context, "save", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(context, "La consulta no retorna nada.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "La consulta no retorna nada.", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -129,13 +131,10 @@ public class FactoryCategory implements IFactory {
         requestQueue.add(con);
     }
 
-    @Override
-    public void All() {
-
-    }
 
     @Override
     public void AllSpecific(final String idCompany) {
+
         StringRequest con = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -162,7 +161,7 @@ public class FactoryCategory implements IFactory {
                         }
 
                     } catch (JSONException ex) {
-                       Log.i("data", Objects.requireNonNull(ex.getMessage()));
+                       Log.i("data", ex.toString());
                         //ex.printStackTrace();
                     }
                 }
@@ -182,6 +181,12 @@ public class FactoryCategory implements IFactory {
 
             }
         };
+
+        con.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(con);
     }
@@ -199,6 +204,11 @@ public class FactoryCategory implements IFactory {
 
     @Override
     public ArrayList<EntityProductModelo> productArrayList() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<EntityOrderModelo> orderArrayList() {
         return null;
     }
 

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -179,8 +180,9 @@ public class Login extends AppCompatActivity {
                              String lastName = row.getString("lastName_user");
                              String password = row.getString("password_user");
                              String phone = row.getString("phone_user");
+                             String address = row.getString("address_user");
 
-                             new GlobalUsuario(id,name,password,type,lastName,firstName,phone);
+                             new GlobalUsuario(id,name,password,type,lastName,firstName,phone,address);
                         }
                         Progress();
                     } catch (JSONException ex) {
@@ -196,7 +198,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Login.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, error.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -209,6 +211,11 @@ public class Login extends AppCompatActivity {
 
             }
         };
+        con.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         RequestQueue requestQueue = Volley.newRequestQueue(Login.this);
         requestQueue.add(con);
     }

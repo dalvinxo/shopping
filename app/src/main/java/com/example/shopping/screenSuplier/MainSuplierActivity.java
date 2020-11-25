@@ -39,24 +39,13 @@ public class MainSuplierActivity extends AppCompatActivity implements BottomNavi
         bottomNavigationView.setSelectedItemId(R.id.navigation_company);
 
     }
-    private long backpressdtime;
-    Toast alert;
+
     @Override
     public void onBackPressed() {
-        if(backpressdtime + 2000 > System.currentTimeMillis()){
-            super.onBackPressed();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                Intent sc = new Intent(MainSuplierActivity.this, Login.class);
-                sc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(sc);
-            }
-            alert.cancel();
-            return;
-        }else{
-            alert = Toast.makeText(getApplicationContext(),"pressiona otra vez para cerrar sesión",Toast.LENGTH_SHORT);
-            alert.show();
-        }
-        backpressdtime = System.currentTimeMillis();
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.in_fade, R.anim.out_fade)
+                    .replace(R.id.container_supplier, logout).commit();
+        bottomNavigationView.setSelectedItemId(R.id.navigation_logout);
     }
 
 

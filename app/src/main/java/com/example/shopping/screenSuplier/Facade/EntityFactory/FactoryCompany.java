@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -13,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.shopping.screenSuplier.Facade.IFactory;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCategoryModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCompanyModelo;
+import com.example.shopping.screenSuplier.UtilidadesListView.EntityOrderModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityProductModelo;
 
 import org.json.JSONArray;
@@ -47,7 +49,7 @@ public class FactoryCompany implements IFactory {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -79,10 +81,6 @@ public class FactoryCompany implements IFactory {
 
     }
 
-    @Override
-    public void All() {
-
-    }
 
     @Override
     public void AllSpecific(final String idUsuario) {
@@ -110,7 +108,7 @@ public class FactoryCompany implements IFactory {
                                 String url = "https://startbuying.000webhostapp.com/Images/"+image;
 
                                 companyModeloArrayList.add(new EntityCompanyModelo(name,phone,contry,addres,
-                                        social,url,status,"0",id));
+                                        social,url,status,id));
 
                         }
 
@@ -123,7 +121,7 @@ public class FactoryCompany implements IFactory {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -134,6 +132,12 @@ public class FactoryCompany implements IFactory {
 
             }
         };
+
+        con.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(con);
     }
@@ -154,5 +158,8 @@ public class FactoryCompany implements IFactory {
     public ArrayList<EntityProductModelo> productArrayList() {
         return null;
     }
-
+    @Override
+    public ArrayList<EntityOrderModelo> orderArrayList() {
+        return null;
+    }
 }

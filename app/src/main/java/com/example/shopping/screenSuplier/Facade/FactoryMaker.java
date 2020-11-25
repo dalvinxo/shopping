@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.example.shopping.screenSuplier.Facade.EntityFactory.FactoryCategory;
 import com.example.shopping.screenSuplier.Facade.EntityFactory.FactoryCompany;
+import com.example.shopping.screenSuplier.Facade.EntityFactory.FactoryOrder;
 import com.example.shopping.screenSuplier.Facade.EntityFactory.FactoryProduct;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCategoryModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCompanyModelo;
+import com.example.shopping.screenSuplier.UtilidadesListView.EntityOrderModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityProductModelo;
 
 import java.util.ArrayList;
@@ -16,12 +18,14 @@ public class FactoryMaker {
     IFactory FactoryCategory;
     IFactory FactoryCompany;
     IFactory FactoryProduct;
+    IFactory FactoryOrder;
 
 
     public FactoryMaker(Context context, String url) {
         FactoryCategory = new FactoryCategory(context, url);
         FactoryCompany = new FactoryCompany(context, url);
         FactoryProduct = new FactoryProduct(context, url);
+            FactoryOrder = new FactoryOrder(context,url);
 
     }
 
@@ -76,6 +80,14 @@ public class FactoryMaker {
 
     public void FactoryProductMethodUpdate(String[] date) {
         FactoryProduct.Edit(date);
+    }
+
+    public void FactoryOrdersMethodAll(String id_date) {
+        FactoryOrder.AllSpecific(id_date);
+    }
+
+    public ArrayList<EntityOrderModelo> getOrders() {
+        return FactoryOrder.orderArrayList();
     }
 
 

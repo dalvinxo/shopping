@@ -74,9 +74,6 @@ public class MainConsumer extends AppCompatActivity implements  BottomNavigation
 
     }
 
-    //private long backpressdtime;
-    //Toast alert;
-
     @Override
     public void onBackPressed() {
         getSupportFragmentManager().beginTransaction()

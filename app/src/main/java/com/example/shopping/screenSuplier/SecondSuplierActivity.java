@@ -1,10 +1,14 @@
 package com.example.shopping.screenSuplier;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,13 +19,30 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.shopping.GlobalUsuario;
 import com.example.shopping.R;
+import com.example.shopping.ScreenConsumer.activity.MainConsumer;
 import com.example.shopping.screenSuplier.fragments_second.FragmentCategory;
 import com.example.shopping.screenSuplier.fragments_second.FragmentOrder;
 import com.example.shopping.screenSuplier.fragments_second.FragmentProduct;
 import com.example.shopping.screenSuplier.fragments_second.FragmentSetting;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SecondSuplierActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -32,7 +53,18 @@ public class SecondSuplierActivity extends AppCompatActivity implements BottomNa
     FragmentProduct fragmentProduct = new FragmentProduct();
     FragmentOrder fragmentOrder = new FragmentOrder();
     FragmentSetting fragmentSetting = new FragmentSetting();
-    Button back;
+
+    ProgressDialog progressDialog;
+    Handler handler;
+    Timer timer;
+    Runnable runnable;
+    int e;
+
+    String url_countOrdersPending = "https://startbuying.000webhostapp.com/CountOrderPending.php";
+    String idCompany = "";
+
+    int countOrders = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,53 +72,85 @@ public class SecondSuplierActivity extends AppCompatActivity implements BottomNa
         setContentView(R.layout.activity_second_suplier);
 
 
+        idCompany = String.valueOf(GlobalUsuario.idCompany);
+
         bottomNavigationView = findViewById(R.id.bottom_navegation_view_suplier_second);
         title = findViewById(R.id.title_second_main_suplier);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_company_category);
-        back = findViewById(R.id.btn_back_supplier_second);
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sc = new Intent(SecondSuplierActivity.this,MainSuplierActivity.class);
-                sc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(sc);
-
-            }
-        });
     }
 
     @Override
-    public void onBackPressed() {
-        Intent sc = new Intent(SecondSuplierActivity.this,MainSuplierActivity.class);
-        sc.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(sc);
+    protected void onStart() {
+        super.onStart();
+        countOrder();
     }
 
-    /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_top_search,menu);
-        MenuItem item =  menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) item.getActionView();
+    @Override
+    protected void onResume() {
+        super.onResume();
+       Progress();
+    }
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    private void Progress() {
+
+        progressDialog = new ProgressDialog(SecondSuplierActivity.this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Loading...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        progressDialog.setMax(100);
+
+        handler = new Handler();
+
+        runnable = new Runnable() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+            public void run() {
+                e = e + 5;
+                if (e <= 100) {
+                    progressDialog.setProgress(e);
+                } else {
+                    timer.cancel();
+                    progressDialog.dismiss();
+                    e = 0;
 
+                    BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.navigation_company_order);
+                    if(countOrders > 0){
+                        badge.setVisible(true);
+                    }else{
+                        badge.setVisible(false);
+                    }
+                    badge.setNumber(countOrders);
+
+                }
+
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public void run() {
+                handler.post(runnable);
             }
-        });
+        }, 1000, 200);
+
+    }
 
 
-        return  super.onCreateOptionsMenu(menu);
+    @Override
+    public void onBackPressed() {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.in_fade, R.anim.out_fade)
+                .replace(R.id.container_supplier_second, fragmentSetting).commit();
+        title.setText("Setting");
+        bottomNavigationView.setSelectedItemId(R.id.navigation_company_setting);
 
-    }*/
+
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -125,4 +189,48 @@ public class SecondSuplierActivity extends AppCompatActivity implements BottomNa
 
         return false;
     }
+
+
+    private void countOrder(){
+        StringRequest con = new StringRequest(StringRequest.Method.POST, url_countOrdersPending, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response != null) {
+
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        for(int i=0; i < array.length(); i++){
+
+                            JSONObject row = array.getJSONObject(i);
+
+                            countOrders = row.getInt("pending");
+                        }
+
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SecondSuplierActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("id_company", idCompany);
+                return parametros;
+
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(SecondSuplierActivity.this);
+        requestQueue.add(con);
+    }
+
+
+
+
+
 }

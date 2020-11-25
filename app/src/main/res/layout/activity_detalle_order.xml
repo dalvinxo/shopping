@@ -12,6 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,8 +24,8 @@
                 android:id="@+id/txa"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:fontFamily="@font/chicle"
+                android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="Order: "
                 android:textColor="#006CD7"
@@ -39,8 +40,8 @@
                 android:id="@+id/consumer_orderViewDetails_idorden"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:fontFamily="@font/amarante"
+                android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="1xzw2"
                 android:textColor="#27292B"
@@ -57,9 +58,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:text="Close"
                 android:textAllCaps="false"
                 android:textColor="#CC4040"
-                android:text="Close"
                 android:textSize="18sp"
                 app:icon="@drawable/ic_close"
                 app:iconGravity="textEnd"

@@ -198,7 +198,7 @@ public class EditAndDeleteCategoryActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(EditAndDeleteCategoryActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Loadin...");
+        progressDialog.setMessage("Loading...");
         progressDialog.setIndeterminate(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();

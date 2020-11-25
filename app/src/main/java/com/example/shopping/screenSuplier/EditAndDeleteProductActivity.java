@@ -27,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -251,7 +252,7 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(EditAndDeleteProductActivity.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Loadin...");
+        progressDialog.setMessage("Loading...");
         progressDialog.setIndeterminate(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -404,6 +405,12 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         super.onStart();
         idCompany = String.valueOf(GlobalUsuario.idCompany);
         listCategory();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Progress();
     }
 
@@ -450,6 +457,12 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
 
             }
         };
+
+        con.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         RequestQueue requestQueue = Volley.newRequestQueue(EditAndDeleteProductActivity.this);
         requestQueue.add(con);
 
@@ -481,6 +494,7 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditAndDeleteProductActivity.this,
                             android.R.layout.simple_spinner_dropdown_item,categorysnames);
                     nameCategory.setAdapter(adapter);
+
                 }
 
             }

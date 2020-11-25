@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ScreenConsumer.activity.DetalleOrderActivity"></activity>
+        <activity android:name=".screenSuplier.CompleteOrderActivity"></activity>
+        <activity android:name=".ScreenConsumer.activity.DetalleOrderActivity" />
         <activity android:name=".ScreenConsumer.activity.BuyActivity" />
         <activity android:name=".ScreenConsumer.activity.ShopsActivity" />
         <activity android:name=".ScreenConsumer.activity.MainConsumer" />

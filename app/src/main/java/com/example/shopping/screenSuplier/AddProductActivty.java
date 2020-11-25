@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -221,7 +222,7 @@ public class AddProductActivty extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(AddProductActivty.this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Loadin...");
+        progressDialog.setMessage("Loading...");
         progressDialog.setIndeterminate(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
@@ -374,6 +375,11 @@ public class AddProductActivty extends AppCompatActivity {
         super.onStart();
         idCompany = String.valueOf(GlobalUsuario.idCompany);
         listCategory();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         Progress();
     }
 
@@ -412,7 +418,7 @@ public class AddProductActivty extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.i("Error data",error.getMessage().toString());
+                Log.i("Error data",error.toString());
             }
         }) {
             @Override
@@ -423,6 +429,11 @@ public class AddProductActivty extends AppCompatActivity {
 
             }
         };
+        con.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         RequestQueue requestQueue = Volley.newRequestQueue(AddProductActivty.this);
         requestQueue.add(con);
 
@@ -451,9 +462,10 @@ public class AddProductActivty extends AppCompatActivity {
                     progressDialog.dismiss();
                     e = 0;
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddProductActivty.this,
-                                android.R.layout.simple_spinner_dropdown_item,categorysnames);
-                        nameCategory.setAdapter(adapter);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(AddProductActivty.this,
+                            android.R.layout.simple_spinner_dropdown_item,categorysnames);
+                    nameCategory.setAdapter(adapter);
+
                 }
 
             }
@@ -465,7 +477,7 @@ public class AddProductActivty extends AppCompatActivity {
             public void run() {
                 handler.post(runnable);
             }
-        }, 2000, 100);
+        }, 2000, 200);
 
     }
 
@@ -496,8 +508,8 @@ public class AddProductActivty extends AppCompatActivity {
                    String Addurl="https://startbuying.000webhostapp.com/InsertCategory.php";
                    Facade = new FactoryMaker(AddProductActivty.this, Addurl);
                    Facade.FactoryCategoryMethodCreate(categorys);
-                   setAddCategoryProgress();
                    bottomSheetDialog.dismiss();
+                   setAddCategoryProgress();
                }
 
             }
@@ -558,8 +570,9 @@ public class AddProductActivty extends AppCompatActivity {
                     timer.cancel();
                     progressDialog.dismiss();
                     e=0;
-
-                    recreate();
+                    finish();
+                    startActivity(getIntent());
+                    //recreate();
                 }
 
             }

@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.text.Editable;
@@ -61,6 +62,8 @@ public class FragmentCategory extends Fragment {
     String url = "https://startbuying.000webhostapp.com/Allcategory.php";
     String idCompany;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,6 +72,16 @@ public class FragmentCategory extends Fragment {
 
         addCategory = v.findViewById(R.id.btn_addCompany_category);
         recyclerView = v.findViewById(R.id.recyclerCompany_category);
+
+        swipeRefreshLayout = v.findViewById(R.id.swipe_refresh);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onStart();
+            }
+        });
+
 
         idCompany = String.valueOf(GlobalUsuario.idCompany);
 
@@ -141,7 +154,7 @@ public class FragmentCategory extends Fragment {
                 public void run() {
                     handler.post(runnable);
                 }
-            }, 1000, 200);
+            }, 1000, 300);
 
         }
 

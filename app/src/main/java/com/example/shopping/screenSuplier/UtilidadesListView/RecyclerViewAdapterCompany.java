@@ -52,7 +52,6 @@ public class RecyclerViewAdapterCompany extends RecyclerView.Adapter<RecyclerVie
         holder.estado.setText(listCompany.get(position).getEstado());
         holder.link.setText(listCompany.get(position).getLink());
         holder.idcompany.setText(listCompany.get(position).getId());
-        holder.order.setText(listCompany.get(position).getOrder());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +84,6 @@ public class RecyclerViewAdapterCompany extends RecyclerView.Adapter<RecyclerVie
             idcompany = (TextView) itemView.findViewById(R.id.item_idCompany);
             link = (TextView) itemView.findViewById(R.id.item_linkCompany);
             estado = (TextView) itemView.findViewById(R.id.item_statusCompany);
-            order = (TextView) itemView.findViewById(R.id.item_orderCompany);
             imagen = (RoundedImageView) itemView.findViewById(R.id.item_imageCompany);
             cardView = (MaterialCardView) itemView.findViewById(R.id.cardview_businness_company);
 

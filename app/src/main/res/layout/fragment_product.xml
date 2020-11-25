@@ -32,8 +32,8 @@
         app:shapeAppearance="@style/Widget.MaterialComponents.Button"
         android:paddingLeft="14dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerCompany_product"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,6 +41,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_addCompany_product"
-        app:layout_constraintVertical_bias="0.0" />
+        >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerCompany_product"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

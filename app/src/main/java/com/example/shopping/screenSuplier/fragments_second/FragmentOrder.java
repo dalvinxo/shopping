@@ -1,66 +1,130 @@
 package com.example.shopping.screenSuplier.fragments_second;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.shopping.GlobalUsuario;
 import com.example.shopping.R;
+import com.example.shopping.screenSuplier.Facade.FactoryMaker;
+import com.example.shopping.screenSuplier.UtilidadesListView.EntityCategoryModelo;
+import com.example.shopping.screenSuplier.UtilidadesListView.EntityOrderModelo;
+import com.example.shopping.screenSuplier.UtilidadesListView.RecyclerViewAdapterCategory;
+import com.example.shopping.screenSuplier.UtilidadesListView.RecyclerViewAdapterOrder;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentOrder#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class FragmentOrder extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    ProgressDialog progressDialog;
+    Handler handler;
+    Timer timer;
+    Runnable runnable;
+    int e;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    View v;
 
-    public FragmentOrder() {
-        // Required empty public constructor
-    }
+    FactoryMaker Facade;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentOrder.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentOrder newInstance(String param1, String param2) {
-        FragmentOrder fragment = new FragmentOrder();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    RecyclerView recyclerView;
+    RecyclerViewAdapterOrder recyclerViewAdapterOrder;
+    LinearLayoutManager linearLayoutManager;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    ArrayList<EntityOrderModelo> orderModeloArrayList;
+
+    String urls = "https://startbuying.000webhostapp.com/AllOrderSuplier.php";
+    String idCompany;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order, container, false);
+        v = inflater.inflate(R.layout.fragment_order, container, false);
+
+        idCompany = String.valueOf(GlobalUsuario.idCompany);
+
+        recyclerView = v.findViewById(R.id.recyclerOrder_suplier);
+
+
+        return  v;
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        Facade = new FactoryMaker(getActivity(), urls);
+        Facade.FactoryOrdersMethodAll(idCompany);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Progress();
+    }
+
+    private void Progress() {
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setTitle("Loading data...");
+        progressDialog.setMessage("Wait while your data loads");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        progressDialog.setMax(100);
+
+        handler = new Handler();
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                e = e + 5;
+                if (e <= 100) {
+                    progressDialog.setProgress(e);
+                } else {
+                    timer.cancel();
+                    progressDialog.dismiss();
+                    e = 0;
+
+                    orderModeloArrayList= new ArrayList<>();
+                    orderModeloArrayList = Facade.getOrders();
+
+                  if (orderModeloArrayList != null && !orderModeloArrayList.isEmpty()) {
+
+                        linearLayoutManager = new LinearLayoutManager(getActivity());
+                        recyclerView.setLayoutManager(linearLayoutManager);
+
+                        recyclerViewAdapterOrder = new RecyclerViewAdapterOrder(orderModeloArrayList, getActivity());
+                        recyclerView.setAdapter(recyclerViewAdapterOrder);
+
+                    }else{
+
+                  }
+
+                }
+
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(runnable);
+            }
+        }, 2000, 300);
+
+    }
+
 }

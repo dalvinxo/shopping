@@ -4,10 +4,9 @@ public class EntityCompanyModelo {
 
     String name,phone,country,address,link;
     String Imagen;
-    String estado;
-    String order,id;
+    String estado, id;
 
-    public EntityCompanyModelo(String name, String phone, String country, String address, String link, String imagen, String estado, String order, String id) {
+    public EntityCompanyModelo(String name, String phone, String country, String address, String link, String imagen, String estado, String id) {
         this.name = name;
         this.phone = phone;
         this.country = country;
@@ -15,7 +14,6 @@ public class EntityCompanyModelo {
         this.link = link;
         Imagen = imagen;
         this.estado = estado;
-        this.order = order;
         this.id = id;
     }
 
@@ -74,14 +72,6 @@ public class EntityCompanyModelo {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
     }
 
     public String getId() {
