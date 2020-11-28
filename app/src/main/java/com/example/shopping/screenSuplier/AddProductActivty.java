@@ -94,6 +94,9 @@ public class AddProductActivty extends AppCompatActivity {
     Uri imageUri;
     Drawable lastImage;
 
+    String urlCreatedProduct = "https://startbuying.000webhostapp.com/createProduct.php";
+
+
     //Add product
     String name_product, description_product, price_product,image_product;
     String idCategory;
@@ -174,8 +177,6 @@ public class AddProductActivty extends AppCompatActivity {
                         image_product = encodedImage;
                         String[] dates = {image_product,name_product,description_product,price_product,idCategory};
 
-                        String urlCreatedProduct = "https://startbuying.000webhostapp.com/createProduct.php";
-
                         Facade= new FactoryMaker(AddProductActivty.this, urlCreatedProduct);
                         Facade.FactoryProductMethodCreated(dates);
                         dialog();
@@ -203,7 +204,7 @@ public class AddProductActivty extends AppCompatActivity {
                 String cat = parent.getItemAtPosition(position).toString();
 
                 if(cat.equalsIgnoreCase("No Category")){
-                    idCategory = null;
+                    idCategory = "";
                 }else{
                     idCategory = String.valueOf(idcategorys[position]);
                     //Toast.makeText(parent.getContext(),idCategory,Toast.LENGTH_SHORT).show();

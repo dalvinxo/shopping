@@ -17,6 +17,7 @@ import com.example.shopping.ScreenConsumer.entity.DetalleOrderModelo;
 import com.example.shopping.ScreenConsumer.entity.OrderModelo;
 import com.example.shopping.ScreenConsumer.entity.ProductModelo;
 import com.example.shopping.ScreenConsumer.entity.StoreModelo;
+import com.example.shopping.singlenton.SinglentonDB;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,8 +88,9 @@ public class DetalleOrders implements IFactory {
 
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(con);
+        //RequestQueue requestQueue = Volley.newRequestQueue(context);
+        //requestQueue.add(con);
+        SinglentonDB.getInstance(context).addToRequestQueue(con);
     }
 
     @Override

@@ -97,8 +97,14 @@ public class BuyActivity extends AppCompatActivity {
         Double prices;
 
         for (BuyProductModelo totalprice: buyProductModeloArrayList) {
-            prices = Double.parseDouble(totalprice.getPrice());
-            sum+= prices;
+
+            if(totalprice.getPrice().equalsIgnoreCase(null)){
+                sum+= 0.00;
+            }else{
+                prices = Double.parseDouble(totalprice.getPrice());
+                sum+= prices;
+            }
+
         }
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");

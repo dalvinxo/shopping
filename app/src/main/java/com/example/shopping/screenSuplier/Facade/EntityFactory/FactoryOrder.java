@@ -19,6 +19,7 @@ import com.example.shopping.screenSuplier.UtilidadesListView.EntityCategoryModel
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCompanyModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityOrderModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityProductModelo;
+import com.example.shopping.singlenton.SinglentonDB;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -129,8 +130,9 @@ public class FactoryOrder implements IFactory {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(con);
+        //RequestQueue requestQueue = Volley.newRequestQueue(context);
+        //requestQueue.add(con);
+        SinglentonDB.getInstance(context).addToRequestQueue(con);
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.example.shopping.screenSuplier.UtilidadesListView.EntityCategoryModel
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityCompanyModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityOrderModelo;
 import com.example.shopping.screenSuplier.UtilidadesListView.EntityProductModelo;
+import com.example.shopping.singlenton.SinglentonDB;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,8 +68,7 @@ public class FactoryCompany implements IFactory {
 
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(con);
+        SinglentonDB.getInstance(context).addToRequestQueue(con);
     }
 
     @Override
@@ -84,7 +84,8 @@ public class FactoryCompany implements IFactory {
 
     @Override
     public void AllSpecific(final String idUsuario) {
-        final StringRequest con = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
+            final StringRequest con = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
+
             @Override
             public void onResponse(String response) {
                 if (response != null) {
@@ -138,8 +139,7 @@ public class FactoryCompany implements IFactory {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(con);
+        SinglentonDB.getInstance(context).addToRequestQueue(con);
     }
 
 

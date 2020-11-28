@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -59,6 +60,8 @@ public class FragmentBusiness extends Fragment {
     ArrayList<EntityCompanyModelo> companyModeloArrayList;
     LinearLayoutManager linearLayoutManager;
 
+    ImageView imageView;
+
 
 
     @Override
@@ -69,6 +72,8 @@ public class FragmentBusiness extends Fragment {
 
         addCompany = v.findViewById(R.id.floating_add_company);
         recyclerViewcompany = (RecyclerView) v.findViewById(R.id.recyclerCompany);
+        imageView = (ImageView) v.findViewById(R.id.activity_empty_imageview);
+
 
         idUsuario = String.valueOf(GlobalUsuario.idusuario);
 
@@ -125,13 +130,14 @@ public class FragmentBusiness extends Fragment {
                     companyModeloArrayList = Facade.getCompany();
 
                     if (companyModeloArrayList != null && !companyModeloArrayList.isEmpty()) {
-
+                        imageView.setVisibility(View.GONE);
                         linearLayoutManager= new LinearLayoutManager(getActivity());
                         recyclerViewcompany.setLayoutManager(linearLayoutManager);
                         recyclerViewAdapterCompany = new RecyclerViewAdapterCompany(getActivity(),companyModeloArrayList);
                         recyclerViewcompany.setAdapter(recyclerViewAdapterCompany);
 
                     } else {
+                        imageView.setVisibility(View.VISIBLE);
                         Log.e("Error", "Arraylist null o int 0 JsonError!!");
                     }
 

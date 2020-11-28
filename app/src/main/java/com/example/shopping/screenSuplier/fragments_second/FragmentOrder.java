@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.shopping.GlobalUsuario;
@@ -47,6 +48,8 @@ public class FragmentOrder extends Fragment {
     String urls = "https://startbuying.000webhostapp.com/AllOrderSuplier.php";
     String idCompany;
 
+    ImageView imageView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,6 +59,8 @@ public class FragmentOrder extends Fragment {
         idCompany = String.valueOf(GlobalUsuario.idCompany);
 
         recyclerView = v.findViewById(R.id.recyclerOrder_suplier);
+
+        imageView = v.findViewById(R.id.activity_empty_imageview);
 
 
         return  v;
@@ -101,7 +106,7 @@ public class FragmentOrder extends Fragment {
                     orderModeloArrayList = Facade.getOrders();
 
                   if (orderModeloArrayList != null && !orderModeloArrayList.isEmpty()) {
-
+                        imageView.setVisibility(View.GONE);
                         linearLayoutManager = new LinearLayoutManager(getActivity());
                         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -109,7 +114,7 @@ public class FragmentOrder extends Fragment {
                         recyclerView.setAdapter(recyclerViewAdapterOrder);
 
                     }else{
-
+                            imageView.setVisibility(View.VISIBLE);
                   }
 
                 }

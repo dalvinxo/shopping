@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -64,6 +65,8 @@ public class FragmentProduct extends Fragment {
 
     SwipeRefreshLayout swipeRefreshLayout;
 
+    ImageView imageView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +76,8 @@ public class FragmentProduct extends Fragment {
             addProduct = v.findViewById(R.id.btn_addCompany_product);
             recyclerView = v.findViewById(R.id.recyclerCompany_product);
             swipeRefreshLayout = v.findViewById(R.id.swipe_refresh);
+            imageView = v.findViewById(R.id.activity_empty_imageview);
+
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -86,6 +91,7 @@ public class FragmentProduct extends Fragment {
 
                         }
                     },5000);
+
                 }
             });
 
@@ -145,7 +151,7 @@ public class FragmentProduct extends Fragment {
                     productModeloArrayList = Facade.getProduct();
 
                     if (productModeloArrayList != null && !productModeloArrayList.isEmpty()) {
-
+                        imageView.setVisibility(View.GONE);
                         linearLayoutManager= new LinearLayoutManager(getActivity());
                         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -153,7 +159,9 @@ public class FragmentProduct extends Fragment {
                         recyclerView.setAdapter(recyclerViewAdapterProduct);
 
                     } else {
-                        Toast.makeText(getActivity(),"ArrayListVacio",Toast.LENGTH_SHORT).show();
+
+                        imageView.setVisibility(View.VISIBLE);
+
                     }
 
                 }

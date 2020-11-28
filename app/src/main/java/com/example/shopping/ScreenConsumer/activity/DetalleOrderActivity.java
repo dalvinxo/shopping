@@ -63,6 +63,7 @@ public class DetalleOrderActivity extends AppCompatActivity {
         phone = findViewById(R.id.consumer_orderViewDetails_phone);
         state = findViewById(R.id.consumer_orderViewDetails_status);
         total = findViewById(R.id.consumer_orderViewDetails_total);
+        close = findViewById(R.id.consumer_orderViewDetails_btnClose);
 
         Bundle st = getIntent().getExtras();
 

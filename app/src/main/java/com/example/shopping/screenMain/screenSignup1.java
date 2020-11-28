@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -106,49 +107,7 @@ public class screenSignup1 extends AppCompatActivity {
                     datos[7] = "2";
                 }
                 insertar();
-                progressDialog = new ProgressDialog(v.getContext());
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.setIndeterminate(false);
-                progressDialog.setTitle("Wait...");
-                progressDialog.setMessage("By saving data to the database, keep your cool as the action ends");
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
-                progressDialog.setMax(100);
-
-                handler = new Handler();
-
-                runnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        e=e+2;
-                        if(e<=100){
-                            progressDialog.setProgress(e);
-                        }else{
-                            timer.cancel();
-                            progressDialog.dismiss();
-                            e=0;
-
-
-
-                            Intent start = new Intent(screenSignup1.this, Login.class);
-                            overridePendingTransition(R.anim.in_top,R.anim.out_top);
-                            start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(start);
-
-                        }
-
-                    }
-                };
-
-                timer = new Timer();
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        handler.post(runnable);
-                    }
-                },2000,200);
-
-
+                progressLogin();
 
             }
         });
@@ -166,21 +125,61 @@ public class screenSignup1 extends AppCompatActivity {
 
     }
 
+    private void progressLogin(){
+        progressDialog = new ProgressDialog(screenSignup1.this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setTitle("Wait...");
+        progressDialog.setMessage("By saving data to the database, keep your cool as the action ends");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+        progressDialog.setMax(100);
+
+        handler = new Handler();
+
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                e=e+2;
+                if(e<=100){
+
+                    progressDialog.setProgress(e);
+
+                }else{
+
+                    timer.cancel();
+                    progressDialog.dismiss();
+                    e=0;
+
+                    Intent start = new Intent(screenSignup1.this, Login.class);
+                    overridePendingTransition(R.anim.in_top,R.anim.out_top);
+                    start.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(start);
+
+                }
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(runnable);
+            }
+        },2000,200);
+
+    }
 
     private void insertar() {
         StringRequest con = new StringRequest(StringRequest.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response != null) {
-                     Toast.makeText(screenSignup1.this, "save", Toast.LENGTH_SHORT).show();
-                }
-                Toast.makeText(screenSignup1.this, "La consulta no retorna nada.", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast.makeText(screenSignup1.this, "Saved", Toast.LENGTH_SHORT).show();
-
+                Log.i("data",error.toString());
             }
         }) {
             @Override
@@ -203,6 +202,5 @@ public class screenSignup1 extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(screenSignup1.this);
         requestQueue.add(con);
     }
-
 
 }

@@ -81,6 +81,8 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
     String url_listCategory = "https://startbuying.000webhostapp.com/listCategory_product.php";
     String url_editProduct ="https://startbuying.000webhostapp.com/editProduct.php";
     String url_deleteProduct ="https://startbuying.000webhostapp.com/deleteProduct.php";
+    String Addurl="https://startbuying.000webhostapp.com/InsertCategory.php";
+
 
     //principal
     TextInputLayout name, description, price;
@@ -99,9 +101,7 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
     //Edit product
     String name_product, description_product, price_product;
     String image_product = null;
-
     String idCategory;
-
     String idProduct = "";
 
     @Override
@@ -148,7 +148,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 bottomDialogDelete(idProduct);
             }
         });
@@ -247,7 +246,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
             }
         });
     }
-
     private void dialog() {
 
         progressDialog = new ProgressDialog(EditAndDeleteProductActivity.this);
@@ -288,7 +286,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
 
 
     }
-
     private TextWatcher validationTextWatcherProduct = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -310,10 +307,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
 
         }
     };
-
-
-
-
     private boolean validationProduct(){
 
         if(!validationNameProduct() | !validationDecriptionProduct() |
@@ -323,7 +316,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
 
         return true;
     }
-
     private boolean validationIdProduct() {
 
         if (idCategory.isEmpty()){
@@ -334,7 +326,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         }
 
     }
-
     private boolean validationPriceProduct() {
         price_product = price.getEditText().getText().toString().trim();
         if (price_product.isEmpty()) {
@@ -345,7 +336,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
             return true;
         }
     }
-
     private boolean validationDecriptionProduct() {
         description_product = description.getEditText().getText().toString().trim();
         if (description_product.isEmpty()) {
@@ -357,7 +347,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         }
 
     }
-
     private boolean validationNameProduct() {
         name_product = name.getEditText().getText().toString().trim();
         if (name_product.isEmpty()) {
@@ -372,8 +361,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
             return true;
         }
     }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -390,7 +377,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
     private void imageStore(Bitmap bitmap) {
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -399,21 +385,17 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         byte[] imageByte = stream.toByteArray();
         encodedImage = android.util.Base64.encodeToString(imageByte, Base64.DEFAULT);
     }
-
     @Override
     protected void onStart() {
         super.onStart();
         idCompany = String.valueOf(GlobalUsuario.idCompany);
         listCategory();
     }
-
-
     @Override
     protected void onResume() {
         super.onResume();
         Progress();
     }
-
     private void listCategory(){
 
         StringRequest con = new StringRequest(StringRequest.Method.POST, url_listCategory, new Response.Listener<String>() {
@@ -467,7 +449,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         requestQueue.add(con);
 
     }
-
     private void Progress() {
 
         progressDialog = new ProgressDialog(EditAndDeleteProductActivity.this);
@@ -509,7 +490,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         }, 2000, 100);
 
     }
-
     private void bottomDialogDelete(final String idProducts) {
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(EditAndDeleteProductActivity.this, R.style.BottomSheetDialogTheme);
@@ -543,7 +523,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(bottomsheetView);
         bottomSheetDialog.show();
     }
-
     private void BottomDialog() {
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(EditAndDeleteProductActivity.this, R.style.BottomSheetDialogTheme);
@@ -568,7 +547,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
 
                     String id_company = String.valueOf(GlobalUsuario.idCompany);
                     String[] categorys = {$namec,$descriptionc, id_company};
-                    String Addurl="https://startbuying.000webhostapp.com/InsertCategory.php";
                     Facade = new FactoryMaker(EditAndDeleteProductActivity.this, Addurl);
                     Facade.FactoryCategoryMethodCreate(categorys);
                     setAddCategoryProgress();
@@ -589,7 +567,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         bottomSheetDialog.setContentView(bottomsheetView);
         bottomSheetDialog.show();
     }
-
     private TextWatcher validationTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -649,8 +626,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         },2000,100);
 
     }
-
-
     private boolean validationNamecategory(){
         $namec = namebottom.getEditText().getText().toString().trim();
 
@@ -681,7 +656,6 @@ public class EditAndDeleteProductActivity extends AppCompatActivity {
         }
 
     }
-
     private boolean validationAddCategory(){
         if(!validationNamecategory() | !validationDescripcioncategory()){
             return false;

@@ -30,6 +30,7 @@ import com.example.shopping.ScreenConsumer.activity.MainConsumer;
 import com.example.shopping.ScreenConsumer.adapter.RecyclerAdapterDetalleOrders;
 import com.example.shopping.ScreenConsumer.entity.DetalleOrderModelo;
 import com.example.shopping.screenMain.Login;
+import com.example.shopping.singlenton.SinglentonDB;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -272,7 +273,7 @@ public class CompleteOrderActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(CompleteOrderActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(CompleteOrderActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -283,8 +284,11 @@ public class CompleteOrderActivity extends AppCompatActivity {
 
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(CompleteOrderActivity.this);
-        requestQueue.add(con);
+        /*RequestQueue requestQueue = Volley.newRequestQueue(CompleteOrderActivity.this);
+        requestQueue.add(con);*/
+
+        SinglentonDB.getInstance(CompleteOrderActivity.this).addToRequestQueue(con);
+
     }
 
 }

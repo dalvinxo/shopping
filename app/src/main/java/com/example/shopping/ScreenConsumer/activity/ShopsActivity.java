@@ -96,7 +96,7 @@ public class ShopsActivity extends AppCompatActivity {
                     start.putExtras(var);
                     startActivity(start);
                 }else{
-                    Snackbar.make(v,"Please product",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v,"No product in cart",Snackbar.LENGTH_SHORT).show();
                 }
 
             }

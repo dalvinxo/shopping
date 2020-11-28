@@ -305,7 +305,27 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Notice!"
+                android:textSize="18sp"
+                android:textColor="#C70B11"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notice if the supplier does not contact you, in less than 24 hours please call +1 809-299-6510 to report it."
+                android:textSize="18sp"
+                android:textColor="#1C1C1C"
+                android:textStyle="normal"
+                />
+
         </LinearLayout>
+
 
 
     </androidx.core.widget.NestedScrollView>
