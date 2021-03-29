@@ -1,2 +1,2 @@
 # shopping
-project of android studio by professor unniversity Freiddy from ITLA
+## proyecto, introducción al desarrollo de aplicaciones moviles
